@@ -1,7 +1,8 @@
 package com.idfinance.controller;
 
 import com.idfinance.model.Coin;
-import com.idfinance.service.impl.CoinServiceImpl;
+import com.idfinance.service.CoinService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,13 +12,10 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class CoinController {
-    private CoinServiceImpl coinService;
-    private static final  String ERROR_MESSAGE = "There isn't such crypto";
-
-    public CoinController(CoinServiceImpl coinService) {
-        this.coinService = coinService;
-    }
+    private final CoinService coinService;
+    private static final String ERROR_MESSAGE = "There isn't such crypto";
 
     @GetMapping("/coins")
     public ResponseEntity<List<Coin>> getCoins() {

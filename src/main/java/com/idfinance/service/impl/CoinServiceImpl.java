@@ -27,8 +27,8 @@ public class CoinServiceImpl implements CoinService {
     private static final int FIRST_ELEMENT = 0;
     private static final String PRICE_KEY = "price_usd";
     private static final String API_REQUEST = "https://api.coinlore.net/api/ticker/?id=";
-    private List<Coin> coins;
-    private CoinRepository coinRepository;
+    private final List<Coin> coins;
+    private final CoinRepository coinRepository;
 
     public CoinServiceImpl(CoinRepository coinRepository) {
         this.coinRepository = coinRepository;

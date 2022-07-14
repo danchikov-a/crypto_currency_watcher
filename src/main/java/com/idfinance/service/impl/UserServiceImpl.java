@@ -6,18 +6,15 @@ import com.idfinance.model.User;
 import com.idfinance.repository.CoinRepository;
 import com.idfinance.repository.UserRepository;
 import com.idfinance.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private CoinRepository coinRepository;
-
-    public UserServiceImpl(UserRepository userRepository, CoinRepository coinRepository) {
-        this.userRepository = userRepository;
-        this.coinRepository = coinRepository;
-    }
+    private final UserRepository userRepository;
+    private final CoinRepository coinRepository;
 
     @Override
     public void saveUser(UserDto userDto) {

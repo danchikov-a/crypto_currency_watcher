@@ -1,9 +1,10 @@
 package com.idfinance.dto;
 
 import lombok.Data;
+import lombok.NonNull;
 
 @Data
 public class UserDto {
-    private String userName;
-    private String coinSymbol;
+    @NonNull private String userName;
+    @NonNull private String coinSymbol;
 }

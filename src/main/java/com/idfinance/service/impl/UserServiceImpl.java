@@ -1,6 +1,7 @@
 package com.idfinance.service.impl;
 
 import com.idfinance.dto.UserDto;
+import com.idfinance.exception.WrongPostRequestException;
 import com.idfinance.model.Coin;
 import com.idfinance.model.User;
 import com.idfinance.repository.CoinRepository;
@@ -31,12 +32,15 @@ public class UserServiceImpl implements UserService {
         String userName = userDto.getUserName();
         String coinSymbolFromDto = userDto.getCoinSymbol();
 
-        if (!userRepository.existsByUserNameAndCoinSymbol(userName, coinSymbolFromDto)) {
+        if (coinRepository.existsBySymbol(coinSymbolFromDto)
+                && !userRepository.existsByUserNameAndCoinSymbol(userName, coinSymbolFromDto)) {
             Coin coin = coinRepository.getCoinBySymbol(userDto.getCoinSymbol());
             String coinSymbol = coin.getSymbol();
             BigDecimal currentPrice = coin.getPrice();
 
             userRepository.save(new User(userDto.getUserName(), coinSymbol, currentPrice));
+        } else {
+            throw new WrongPostRequestException();
         }
     }
 

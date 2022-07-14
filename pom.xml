@@ -18,16 +18,22 @@
         <json-simple.version>1.1.1</json-simple.version>
         <junit.version>4.13.2</junit.version>
         <mockito.version>4.6.1</mockito.version>
+        <mysql.version>8.0.29</mysql.version>
     </properties>
     <dependencies>
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>${json-simple.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Data
 @Entity
 @NoArgsConstructor
+@Table(name = "coin")
 public class Coin {
     @Id
     private Long id;

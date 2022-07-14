@@ -24,7 +24,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final CoinRepository coinRepository;
     private static final int SIGNS_AFTER_COMMA = 4;
-    private static final int PERCENTAGE_DIFFERENCE = 1;
+    private static final double PERCENTAGE_DIFFERENCE = 0.01;
+    private static final double ONE_HUNDRED_PERCENTS = 100;
+    private static final double ONE_HUNDRED_PERCENTS_LIKE_NUMBER = 1;
     private static final String LOGGER_MESSAGE= "Symbol: %s. Username: %s. Percentage different: %s";
 
     @Override
@@ -63,13 +65,15 @@ public class UserServiceImpl implements UserService {
             BigDecimal ratio = coinPrice.compareTo(actualPrice) > 0
                     ? coinPrice.divide(actualPrice, SIGNS_AFTER_COMMA, RoundingMode.HALF_UP)
                     : actualPrice.divide(coinPrice, SIGNS_AFTER_COMMA, RoundingMode.HALF_UP);
+            ratio = ratio.subtract(new BigDecimal(ONE_HUNDRED_PERCENTS_LIKE_NUMBER));
+
             boolean isDifferentByPercentage = ratio.compareTo(BigDecimal.valueOf(PERCENTAGE_DIFFERENCE)) != 0;
 
             if (isDifferentByPercentage) {
                 log.warn(String.format(LOGGER_MESSAGE,
                         currentUser.getCoinSymbol(),
                         currentUser.getUserName(),
-                        ratio.abs()));
+                        ratio.abs().multiply(new BigDecimal(ONE_HUNDRED_PERCENTS))));
             }
         });
     }

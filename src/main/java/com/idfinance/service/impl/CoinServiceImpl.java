@@ -1,6 +1,5 @@
 package com.idfinance.service.impl;
 
-import com.idfinance.exception.NoSuchCoinException;
 import com.idfinance.exception.ServerConfigDoesntExistsException;
 import com.idfinance.model.Coin;
 import com.idfinance.repository.CoinRepository;
@@ -79,7 +78,7 @@ public class CoinServiceImpl implements CoinService {
 
             coinRepository.save(coinToSave);
         } catch (RestClientException exception) {
-            throw new NoSuchCoinException();
+            saveCoin(coinNumber);
         }
     }
 

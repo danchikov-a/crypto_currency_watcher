@@ -28,11 +28,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserDto userDto) {
-        Coin coin = coinRepository.getCoinBySymbol(userDto.getCoinSymbol());
-        String coinSymbol = coin.getSymbol();
-        BigDecimal currentPrice = coin.getPrice();
+        String userName = userDto.getUserName();
+        String coinSymbolFromDto = userDto.getCoinSymbol();
 
-        userRepository.save(new User(userDto.getUserName(), coinSymbol, currentPrice));
+        if (!userRepository.existsByUserNameAndCoinSymbol(userName, coinSymbolFromDto)) {
+            Coin coin = coinRepository.getCoinBySymbol(userDto.getCoinSymbol());
+            String coinSymbol = coin.getSymbol();
+            BigDecimal currentPrice = coin.getPrice();
+
+            userRepository.save(new User(userDto.getUserName(), coinSymbol, currentPrice));
+        }
     }
 
     @Override

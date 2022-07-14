@@ -1,5 +1,6 @@
 package com.idfinance.service.impl;
 
+import com.idfinance.exception.NoSuchCoinException;
 import com.idfinance.exception.ServerConfigDoesntExistsException;
 import com.idfinance.model.Coin;
 import com.idfinance.repository.CoinRepository;
@@ -9,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.FileReader;
@@ -64,15 +66,21 @@ public class CoinServiceImpl implements CoinService {
     @Override
     public void saveCoin(int coinNumber) {
         String fullRequest = API_REQUEST + coins.get(coinNumber).getId();
-        JSONArray jsonArray = new RestTemplate().getForObject(fullRequest, JSONArray.class);
+        RestTemplate restTemplate = new RestTemplate();
 
-        Map<String, String> map = (LinkedHashMap<String, String>) jsonArray.get(FIRST_ELEMENT);
-        Long coinId = Long.parseLong(map.get(ID_KEY));
-        String coinSymbol = map.get(SYMBOL_KEY);
-        BigDecimal coinPrice = new BigDecimal(map.get(PRICE_KEY));
-        Coin coinToSave = new Coin(coinId, coinSymbol, coinPrice);
+        try {
+            JSONArray jsonArray = restTemplate.getForObject(fullRequest, JSONArray.class);
 
-        coinRepository.save(coinToSave);
+            Map<String, String> map = (LinkedHashMap<String, String>) jsonArray.get(FIRST_ELEMENT);
+            Long coinId = Long.parseLong(map.get(ID_KEY));
+            String coinSymbol = map.get(SYMBOL_KEY);
+            BigDecimal coinPrice = new BigDecimal(map.get(PRICE_KEY));
+            Coin coinToSave = new Coin(coinId, coinSymbol, coinPrice);
+
+            coinRepository.save(coinToSave);
+        } catch (RestClientException exception) {
+            throw new NoSuchCoinException();
+        }
     }
 
     @Override

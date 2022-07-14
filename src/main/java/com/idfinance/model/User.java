@@ -19,12 +19,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String userName;
-    private Long coinId;
+    private String coinSymbol;
     private BigDecimal coinPrice;
 
-    public User(String userName, Long coinId, BigDecimal coinPrice) {
+    public User(String userName, String coinSymbol, BigDecimal coinPrice) {
         this.userName = userName;
-        this.coinId = coinId;
+        this.coinSymbol = coinSymbol;
         this.coinPrice = coinPrice;
     }
 }

@@ -11,10 +11,10 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(MockitoJUnitRunner.class)
 public class CoinServiceImplTest {
     @Mock
-    private CoinServiceImpl coinServiceImpl;
+    private CoinServiceImpl coinService;
 
     @Test
     public void shouldReturnList() {
-        assertNotNull(coinServiceImpl.getCoinList());
+        assertNotNull(coinService.getCoinList());
     }
 }

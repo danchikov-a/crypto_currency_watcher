@@ -74,4 +74,9 @@ public class CoinServiceImpl implements CoinService {
 
         coinRepository.save(coinToSave);
     }
+
+    @Override
+    public Coin getCoin(Long id) {
+        return coinRepository.getReferenceById(id);
+    }
 }

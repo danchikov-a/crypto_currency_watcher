@@ -7,4 +7,5 @@ import java.util.List;
 public interface CoinService {
     List<Coin> getCoinList();
     void saveCoin(int coinNumber);
+    Coin getCoin(Long id);
 }
